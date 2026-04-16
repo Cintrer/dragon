@@ -15,28 +15,27 @@ let classe;
 /* *************************************** FONCTIONS JEU *************************************** */
 /*************************************************************************************************/
 
-/**
- * Affiche l'état des points de vie, les barres de progression et les portraits
- */
+
+//Affiche l'état des points de vie, les barres de progression et les portraits
+
 function afficherEtatDuJeu() {
     document.write('<div class="game-state">');
     
-    // --- PARTIE CHEVALIER ---
+    // Chevalier
     document.write('<figure class="game-state_player">');
-        // Bonus 1 : Portrait blessé si PV < 30%
+        //Portrait blessé si PV < 30%
         if (pvJoueur < (pvJoueurMax * 0.3)) {
             document.write('<img src="images/knight-wounded.png" alt="Chevalier blessé">');
         } else {
             document.write('<img src="images/knight.png" alt="Chevalier">');
         }
         document.write('<figcaption>');
-            // Bonus 3 : Barre de vie dynamique
             document.write('<progress max="' + pvJoueurMax + '" value="' + pvJoueur + '"></progress>');
             document.write(pvJoueur <= 0 ? "GAME OVER" : pvJoueur + " PV");
         document.write('</figcaption>');
     document.write('</figure>');
 
-    // --- PARTIE DRAGON ---
+    // dragon
     document.write('<figure class="game-state_player">');
         if (pvDragon < (pvDragonMax * 0.3)) {
             document.write('<img src="images/dragon-wounded.png" alt="Dragon blessé">');
@@ -52,9 +51,9 @@ function afficherEtatDuJeu() {
     document.write('</div>');
 }
 
-/**
- * Calcule les dégâts en appliquant les bonus/malus du README
- */
+
+ //Calcule les dégâts en appliquant les bonus/malus
+
 function calculerDegats(attaquant) {
     let degats = throwDices(3, 6); // Base 3D6
     let variation = 0;
@@ -63,7 +62,7 @@ function calculerDegats(attaquant) {
         // Difficulté
         if (niveau === 1) variation -= throwDices(2, 6); // Facile : -2D6%
         if (niveau === 3) variation += throwDices(1, 6); // Difficile : +1D6%
-        // Bonus Chevalier : armure -1D10%
+        // armure -1D10%
         if (classe === 1) variation -= throwDices(1, 10);
     } else {
         // Joueur
@@ -77,9 +76,9 @@ function calculerDegats(attaquant) {
     return Math.floor(degats);
 }
 
-/**
- * Déroulement d'un tour de combat
- */
+
+// Déroulement d'un tour de combat
+
 function lancerTourDeCombat(numeroTour) {
     document.write('<h3>Tour n°' + numeroTour + '</h3>');
 
@@ -106,9 +105,9 @@ function lancerTourDeCombat(numeroTour) {
     }
 }
 
-/**
- * Lance le combat jusqu'à la fin
- */
+
+// Lance le combat jusqu'à la fin
+
 function jouerPartie() {
     let tour = 1;
     while (pvDragon > 0 && pvJoueur > 0) {
@@ -118,9 +117,9 @@ function jouerPartie() {
     }
 }
 
-/**
- * Message final du vainqueur
- */
+
+// Message final vainqueur 
+
 function afficherFinDePartie() {
     document.write('<footer>');
     document.write('<h3>Fin de la partie</h3>');
