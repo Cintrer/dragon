@@ -118,7 +118,7 @@ function jouerPartie() {
 }
 
 
-// Message final vainqueur 
+// Message final vainqueur  
 
 function afficherFinDePartie() {
     document.write('<footer>');
