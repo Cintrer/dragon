@@ -127,9 +127,9 @@ function afficherFinDePartie() {
 /* ************************************** CODE PRINCIPAL *************************************** */
 /*************************************************************************************************/
 
-// 1. Demander la difficulté (1=Facile, 2=Normal, 3=Difficile)
-// On utilise la fonction du prof dans utilities.js
-niveau = requestInteger("Choisir la difficulté :\n1. Facile / 2. Normal / 3. Difficile", 1, 3);
+// 1. Choix du niveau et de la classe
+niveau = requestInteger("1. Facile / 2. Normal / 3. Difficile", 1, 3);
+classe = requestInteger("Choisir une classe :\n1. Chevalier / 2. Voleur / 3. Mage", 1, 3);
 
 // 2. Calcul des points de vie selon le niveau
 if (niveau === 1) {
@@ -146,9 +146,9 @@ if (niveau === 1) {
 // 3. Affichage initial de l'état du jeu
 document.write('<h2>Que la fête commence !!</h2>');
 afficherEtatDuJeu();
-
+// On enregistre les PV max pour les jauges
+pvJoueurMax = pvJoueur;
+pvDragonMax = pvDragon;
 // 4. On lance le combat !
 jouerPartie();
-
-// 5. Une fois que la boucle est finie, on affiche le résultat final
 afficherFinDePartie();// 5. Une fois que la boucle est finie, on affiche le résultat final
