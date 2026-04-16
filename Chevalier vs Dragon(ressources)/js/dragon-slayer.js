@@ -7,8 +7,10 @@
 // Initialisation des variables globales
 let pvDragon;
 let pvJoueur;
+let pvJoueurMax; // On stocke le max pour la barre de vie
+let pvDragonMax; // On stocke le max pour la barre de vie
 let niveau; 
-
+let classe; // Bonus 2 : chevalier, mage ou voleur
 
 /*************************************************************************************************/
 /* *************************************** FONCTIONS JEU *************************************** */
@@ -17,20 +19,35 @@ let niveau;
 * Affiche les points de vie actuels dans le document HTML
  */
 function afficherEtatDuJeu() {
-    // On écrit le code HTML directement comme dans la maquette
     document.write('<div class="game-state">');
     
-        // Affichage du Chevalier
-        document.write('<figure class="game-state_player">');
-            document.write('<img src="images/knight.png" alt="Chevalier">');
-            document.write('<figcaption>' + pvJoueur + ' PV</figcaption>');
-        document.write('</figure>');
+    // Joueur
+    document.write('<figure class="game-state_player">');
+        // Bonus 1 : Image blessée si < 30%
+        if (pvJoueur < (pvJoueurMax * 0.3)) {
+            document.write('<img src="images/knight-wounded.png">');
+        } else {
+            document.write('<img src="images/knight.png">');
+        }
+        document.write('<figcaption>');
+            // Bonus 3 : La jauge de PV
+            document.write('<progress max="' + pvJoueurMax + '" value="' + pvJoueur + '"></progress>');
+            document.write(pvJoueur <= 0 ? "Game Over" : pvJoueur + " PV");
+        document.write('</figcaption>');
+    document.write('</figure>');
 
-        // Affichage du Dragon
-        document.write('<figure class="game-state_player">');
-            document.write('<img src="images/dragon.png" alt="Dragon">');
-            document.write('<figcaption>' + pvDragon + ' PV</figcaption>');
-        document.write('</figure>');
+    // Dragon
+    document.write('<figure class="game-state_player">');
+        if (pvDragon < (pvDragonMax * 0.3)) {
+            document.write('<img src="images/dragon-wounded.png">');
+        } else {
+            document.write('<img src="images/dragon.png">');
+        }
+        document.write('<figcaption>');
+            document.write('<progress max="' + pvDragonMax + '" value="' + pvDragon + '"></progress>');
+            document.write(pvDragon <= 0 ? "Vaincu !" : pvDragon + " PV");
+        document.write('</figcaption>');
+    document.write('</figure>');
     
     document.write('</div>');
 }
@@ -84,49 +101,6 @@ function jouerPartie() {
     }
 }
 
-
-/**
- * Affiche l'état du jeu avec le bonus des images amochées (Bonus n1)
- */
-function afficherEtatDuJeu() {
-    document.write('<div class="game-state">');
-    
-    // --- CHEVALIER ---
-    document.write('<figure class="game-state_player">');
-        // Bonus 1 : Si PV < 30%, on change l'image
-        // On considère que 100 PV est la base (ou on simplifie pour le moment)
-        if (pvJoueur < 30) {
-            document.write('<img src="images/knight-wounded.png" alt="Chevalier amoché">');
-        } else {
-            document.write('<img src="images/knight.png" alt="Chevalier">');
-        }
-        
-        // Si le joueur est mort, on écrit Game Over, sinon ses PV
-        if (pvJoueur <= 0) {
-            document.write('<figcaption>Game Over</figcaption>');
-        } else {
-            document.write('<figcaption>' + pvJoueur + ' PV</figcaption>');
-        }
-    document.write('</figure>');
-
-    // --- DRAGON ---
-    document.write('<figure class="game-state_player">');
-        if (pvDragon < 30) {
-            document.write('<img src="images/dragon-wounded.png" alt="Dragon amoché">');
-        } else {
-            document.write('<img src="images/dragon.png" alt="Dragon">');
-        }
-
-        if (pvDragon <= 0) {
-            document.write('<figcaption>Vaincu !</figcaption>');
-        } else {
-            document.write('<figcaption>' + pvDragon + ' PV</figcaption>');
-        }
-    document.write('</figure>');
-    
-    document.write('</div>');
-}
-
 /**
  * Affiche l'écran final de victoire ou défaite
  */
@@ -177,4 +151,4 @@ afficherEtatDuJeu();
 jouerPartie();
 
 // 5. Une fois que la boucle est finie, on affiche le résultat final
-afficherFinDePartie();
+afficherFinDePartie();// 5. Une fois que la boucle est finie, on affiche le résultat final
